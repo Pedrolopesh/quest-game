@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../styles/_align.css">
     <link rel="stylesheet" href="../styles/home.css">
 
-    <title>Document</title>
+    <title>Quest-Game</title>
 </head>
 <body>
     <div>
@@ -19,7 +19,37 @@
             <img src="../assets/logo-type.png" alt="logo type" class="size-logo-image ac mb-5 mt-4"/>
         </div>
         
-        <Podium/>
+        <div class="container-cup-podiuns ac">
+            <div class="ac">
+                <img src="../assets/SVG/cup2-podium.svg" alt="Taça 2 lugar" class="cup-size-2 cup-size ac">
+
+                <div class="container-board board-2 mt-2">
+                    <div class="in-board-2 container-board">
+                        <p class="text-board" id="player-name-1"> jogador1 - 50 pontos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ac">
+                <img src="../assets/SVG/cup1-podium.svg" alt="Taça 1 lugar" class="cup-size-1 cup-size ac">
+
+                <div class="container-board board-1 mt-2">
+                    <div class="in-board-1 container-board">
+                        <p class="text-board" id="player-name-2"> jogador1 - 50 pontos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ac">
+                <img src="../assets/SVG/cup3-podium.svg" alt="Taça 3 lugar" class="cup-size-3 cup-size ac">
+
+                <div class="container-board board-3 mt-2">
+                    <div class="in-board-3 container-board">
+                        <p class="text-board" id="player-name-3"> jogador1 - 50 pontos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <Button class="ac button-play" type="primary">
             <a href="/pages/Preview.html">Jogar</a>
@@ -29,4 +59,87 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<style>
+    .container-cup-podiuns{
+        max-width: 80%;
+        width: 100%;
+        display: flex;
+        background-color: rgb(219, 219, 219);
+        border-radius: 20px;
+        box-shadow: 7px 6px 15px rgba(0, 0, 0, 0.424) !important;
+        padding: 20px;
+    }
+    
+    .cup-size, .cup-size-1{
+        display: block;
+    }
+
+    .cup-size-1{
+        display: block;
+        max-width: 100%;
+        width: 200px;
+    }
+
+    .cup-size-2{
+        display: block;
+        max-width: 100%;
+        width: 150px;
+        margin-top: 200px;
+    }
+
+    .cup-size-3{
+        display: block;
+        max-width: 100%;
+        width: 100px;
+        margin-top: 300px;
+    }
+
+    .container-board{
+        display: block;
+        max-width: 100%;
+        width: 400px;
+        border-radius: 14px;
+        border: 6px solid #6b184e;
+        padding: 10px;
+    }
+    
+    .board-1{
+        background-color: #51c6db;
+    }
+    .board-2{
+        background-color: #ed9f51;
+    }
+    .board-3{
+        background-color: #47e247;
+    }
+
+    .in-board-1{
+        padding: 10px;
+        background-color: #209dd8;
+    }
+
+    .in-board-2{
+        padding: 10px;
+        background-color: #e05000;
+    }
+
+    .in-board-3{
+        padding: 10px;
+        background-color: #51b764;
+    }
+
+    .text-board{
+        color: white;
+        font-size: 20px;
+        display: block;
+        text-align: center;
+        max-width: 100%;
+        width: 100%;
+        padding: 0px !important;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 0px;
+    }
+
+</style>
 </html>

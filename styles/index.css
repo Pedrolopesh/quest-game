@@ -1,3 +1,6 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 .mw-w-100{
     max-width: 100%;
@@ -123,4 +126,29 @@ h1, h2, h3, h4, h5{
 
 .selected-subject{
     color: rgb(0, 119, 255) !important;
+}
+
+.conatiner-quest{
+    max-width: 60%;
+    width: 100%;
+}
+
+.btn{
+    display: block;
+    padding: 13px;
+    border: none;
+    color: white;
+    background-color: rgb(0, 132, 255);
+    border-radius: 10px;
+}
+
+.btn:hover{
+    transition: 1s;
+    padding: 20px;
+    box-shadow: 7px 6px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.btn:not(:hover){
+    transition: 1s;
+    padding: 10px;
 }

@@ -6,6 +6,10 @@
     margin: 0;
 }
 
+.pb-10{
+    padding-bottom: 50px;
+}
+
 .p0{
     padding: 0px !important;
 }

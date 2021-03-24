@@ -18,7 +18,7 @@ const routes = [
     component: () => import('../views/viewsPublic.vue'),
     children: [
       {
-        path: '/',
+        path: '/Home',
         name: 'Home',
         component: Home
       },

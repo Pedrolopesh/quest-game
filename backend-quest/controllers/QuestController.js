@@ -4,12 +4,14 @@ const Matter = require('../models/Matter')
 module.exports = {
     async createQuest(req, res){
 
-        const { matter, playerAnswer, description, correctAlternative, alternatives, level, points} = req.body
+        const { matter, description, correctAlternative, alternatives, level, points} = req.body
 
         if(
-            !matter || !playerAnswer || 
-            !description || !correctAlternative || 
-            !alternatives || !level || 
+            !matter || 
+            !description || 
+            !correctAlternative || 
+            !alternatives || 
+            !level || 
             !points 
         ){
             return res.status(400).send({ success: false, message: 'Please fill in all fields' })
@@ -24,8 +26,7 @@ module.exports = {
             
             
             const newQuest = new Quest({
-                matter, 
-                playerAnswer, 
+                matter,
                 description, 
                 correctAlternative, 
                 alternatives, 

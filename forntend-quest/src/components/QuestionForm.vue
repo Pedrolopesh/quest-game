@@ -4,10 +4,12 @@
 
         <div class="d-flex" v-for="(item,i) in itens.alternatives" :key="i">
             <v-checkbox
-                @click="select(item)"
+                @click="select(itens,item)"
                 :label="item.option+` - `+ item.text"
                 :disabled="selectedCheckbox()"
             ></v-checkbox>
+
+
 
             <!-- <span>{{item.option}} </span> -->
             <!-- <span> - {{item.text}}</span> -->
@@ -20,20 +22,32 @@ export default {
     props:['itens'],
 
     data:() => ({
-        checkbox:[]
+        checkbox:[],
+        selectedAlternatives:[]
     }),
 
     methods:{
-        select(param){
-            console.log(param);
-            this.checkbox = param
+        select(selectedMatter, selectedAnswer){
+            let newAnswer = {
+                _id:selectedMatter._id,
+                playerAnswer:selectedAnswer.option
+            }
+            this.selectedAlternatives.push(newAnswer)
+            this.checkbox = selectedMatter
             this.selectedCheckbox()
+            console.log(this.selectedAlternatives)
         },
 
         selectedCheckbox(){
             if(this.checkbox.length !== 0) return true
             else return false 
         }
+    },
+
+    watch:{
+        // checkbox(){
+        //     console.log()
+        // }
     }
 }
 </script>

@@ -17,6 +17,7 @@
    </div>
 
   </div> 
+  
 
   </div>
     <button class="play" @click="funcao()">JOGAR</button>

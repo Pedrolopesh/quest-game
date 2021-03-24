@@ -32,7 +32,7 @@
 
 <script>
 // @ is an alias to /src
-import AppBar from '../components/AppBar.vue'
+import AppBar from '../../components/AppBar.vue'
 
 export default {
   name: 'Home',
@@ -58,6 +58,7 @@ export default {
           this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Erro ao cadastrar player',})
         
         }else{
+          localStorage.setItem('player', JSON.stringify(resp.data));
           this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao cadastrar, Bem vindo Jogador: ' + resp.data.nickname,})
         }
       })

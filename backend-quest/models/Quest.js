@@ -5,26 +5,48 @@ const QuestSchema = new mongoose.Schema({
     title: {
         type: String,
         require: true,
-        unique: true,
     },
-
-    questionLevel: {
-        type: Number,
-        require: true,
-        unique: true,
-    },
-
-    questions: {
-        type: Array,
-        require: true,
+    
+    matter: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Matter'
+    }],
+    
+    playerAnswer:{
+        type: Object,
+        require: false,
         enum: [{
-            id: Number,
-            conteudo: String,
-            alternatives: Array,
-            correctAlternative: Array,
-            player: String,
-            points: Number,
+            player:Array,
+            playerOption:String
         }]
+    },
+    
+    description: {
+        type: String,
+        require: false,
+    },
+
+    correctAlternative:{
+        type: String,
+        require: false,
+    },
+    
+    alternatives: {
+        type: Object,
+        require: false,
+        enum: [
+            {option:String, text:String},
+        ]
+    },
+    
+    level:{
+        type: Number,
+        require: false,
+    },
+
+    points:{
+        type: Number,
+        require: false,
     },
 
     status: {

@@ -11,6 +11,10 @@
           <v-btn to="/SelectSubject" class="ml-2" outlined dark color="white">
               Selecionar matéria
           </v-btn>
+
+          <v-btn to="/admin/dash" class="ml-2" outlined dark color="white">
+              Dashboard admin
+          </v-btn>
         </div>
 
         <div class="ml-a container-swicth">

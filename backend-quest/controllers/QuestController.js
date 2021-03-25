@@ -60,7 +60,6 @@ module.exports = {
     },
 
     async listQuestionsByLevel(req, res){
-        console.log(req.body)
         const { matter, level } = req.body
 
         if( !matter ||  !level) return res.status(400).send({ success: false, message: 'Please fill in all fields' })
@@ -75,7 +74,6 @@ module.exports = {
     },
 
     async listQuestionsByLevelAndLimit(req, res){
-        console.log(req.body)
         const { matter, level, questLimit} = req.body
 
         if( !matter ||  !level || !questLimit) return res.status(400).send({ success: false, message: 'Please fill in all fields' })
@@ -83,7 +81,7 @@ module.exports = {
         const filtered = await Quest.find({ matter:matter, level: level })
         .populate('matter');
 
-        if(!filtered || filtered.length === 0) return res.status(402).send({ success: false, message: 'matter not found' })
+        // if(!filtered || filtered.length === 0) return res.status(402).send({ success: false, message: 'matter not found' })
         
         let result = filtered.slice(0,questLimit);
         
@@ -100,7 +98,6 @@ module.exports = {
         }
         let previewArray = []
         previewArray.push(previewAnswer)
-        console.log(previewArray)
 
         return res.status(201).send({ success: true, preview: previewArray });
     },

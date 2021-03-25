@@ -60,6 +60,7 @@ export default {
 
       localStorage.setItem('selectedMatter', JSON.stringify(selectedMaterObject));
       this.$router.push('/SelectedMatter')
+      // this.$router.push('/ExactMatter')
     }
   }
 }

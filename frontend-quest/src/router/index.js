@@ -59,6 +59,11 @@ const routes = [
         name: 'Matéria Selecionada',
         component: SelectedMatter
       },
+      {
+        path: '/ExactMatter',
+        name: 'Matéria Exatas',
+        component: ExactMatter
+      },
     ]
   },
 

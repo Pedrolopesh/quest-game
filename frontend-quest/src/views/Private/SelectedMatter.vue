@@ -4,11 +4,12 @@
 
 
         <div v-for="(item,i) in questions" :key="i">
-            <QuestionForm :itens="item" :confirmQuestion="confirmQuestionDatas" @checkOutAnswer="checkAnswer"/>
+            <QuestionForm :itens="item" :confirmQuestion="confirmQuestionDatas" :currentStep="currentStep" @checkOutAnswer="checkAnswer"/>
         </div>
 
         <div align="center">
-          <v-btn dark color="purple" @click="nextStep()">Proxima Fase</v-btn>
+          <v-btn v-if="currentStep !== 3" dark color="purple" class="mb-10 mt-10" @click="nextStep()">Proxima Fase</v-btn>
+          <v-btn v-else dark color="purple" class="mb-10 mt-10" @click="finishGame()">Finalizar Jogo</v-btn>
         </div>
 
         <v-dialog v-model="dialogConfirmAnswer" max-width="600">
@@ -48,7 +49,7 @@ export default {
       dialogConfirmAnswer: false,
       confirmQuestData:'',
       paramSelectedQuest:'',
-      confirmQuestionDatas:'',
+      confirmQuestionDatas:[],
       
       currentStep:1,
       stepQuestion:'',
@@ -114,19 +115,24 @@ export default {
 
         console.log(this.paramSelectedQuest)
         let currentPlayer =  JSON.parse(localStorage.getItem('player'))
-        let body = {
+        let selectedAlternative = {
             questId:this.paramSelectedQuest.selectedAlternativeParam._id,
             player:currentPlayer.player._id,
             playerOption:this.paramSelectedQuest.selectedAnswer.option
         }
-        const answerQuestion = await this.$http.post(this.$url + '/answer/question', body);
-        if(!answerQuestion || answerQuestion.length === 0) this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Ops! Algo deu errado!'})
-        if(answerQuestion){
-          this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao responder.',})
-          this.dialogConfirmAnswer = false
-          this.confirmQuestionDatas = body
-        }
+        this.confirmQuestionDatas.push(selectedAlternative)
+        this.dialogConfirmAnswer = false
+        // const answerQuestion = await this.$http.post(this.$url + '/answer/question', selectedAlternative);
+        // if(!answerQuestion || answerQuestion.length === 0) this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Ops! Algo deu errado!'})
+        // if(answerQuestion){
+        //   this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao responder.',})
+        //   this.confirmQuestionDatas = body
+        // }
       },
+
+      async finishGame(){
+        this.$router.push('/')
+      }
   }
 }
 </script>

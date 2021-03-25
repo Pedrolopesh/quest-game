@@ -1,53 +1,57 @@
 <template>
   <div class="container-form ac mt-15">
+
         <h3>{{ itens.description }}</h3>
 
         <div class="d-flex" v-for="(item,i) in itens.alternatives" :key="i">
             <v-checkbox
                 @click="select(itens,item)"
                 :label="item.option+` - `+ item.text"
-                :disabled="selectedCheckbox()"
+                :disabled="disabledCheckBox"
             ></v-checkbox>
 
-
-
-            <!-- <span>{{item.option}} </span> -->
-            <!-- <span> - {{item.text}}</span> -->
         </div>
   </div>
 </template>
 
 <script>
 export default {
-    props:['itens'],
+    props:['itens', 'confirmQuestion'],
 
     data:() => ({
         checkbox:[],
-        selectedAlternatives:[]
+        selectedAlternatives:[],
+        dialogConfirmAnswer: false,
+        confirmquestData:'',
+        disabledCheckBox: false,
+
+        selectQuest:''
     }),
 
     methods:{
-        select(selectedMatter, selectedAnswer){
-            let newAnswer = {
-                _id:selectedMatter._id,
-                playerAnswer:selectedAnswer.option
-            }
-            this.selectedAlternatives.push(newAnswer)
-            this.checkbox = selectedMatter
-            this.selectedCheckbox()
-            console.log(this.selectedAlternatives)
+        async select(selectedAlternativeParam, selectedAnswer){
+            let emitParams = { selectedAlternativeParam, selectedAnswer }
+            this.selectQuest = { questId: selectedAlternativeParam._id, select: true }
+            this.$emit('checkOutAnswer', emitParams)  
+        },
+
+        addItensOnArray(paramItens){
+            let alternatives = []
+            alternatives.push(paramItens);
+            this.selectedAlternatives.push(paramItens);
         },
 
         selectedCheckbox(){
-            if(this.checkbox.length !== 0) return true
-            else return false 
+            if(this.selectQuest) this.disabledCheckBox = true
+            else this.disabledCheckBox = false
         }
     },
 
     watch:{
-        // checkbox(){
-        //     console.log()
-        // }
+        confirmQuestion(){
+            this.addItensOnArray(this.confirmQuestion)
+            this.selectedCheckbox()
+        }
     }
 }
 </script>

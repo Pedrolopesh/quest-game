@@ -13,12 +13,8 @@ const QuestSchema = new mongoose.Schema({
     }],
     
     playerAnswer:{
-        type: Object,
+        type: Array,
         require: false,
-        enum: [{
-            player:Array,
-            playerOption:String
-        }]
     },
     
     description: {

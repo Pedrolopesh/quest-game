@@ -32,7 +32,7 @@ export default {
                 title: this.title,
             }
 
-            const quest = await this.$http.post(this.$url + '/quest/create', body)
+            const quest = await this.$http.post(this.$url + '/create/matter', body)
 
             if(!quest.data || quest.status != 201){
                 this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Erro ao cadastrar Matéria',})

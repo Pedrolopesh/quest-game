@@ -20,7 +20,7 @@
   
 
   </div>
-    <button class="play" @click="funcao()">JOGAR</button>
+    <button class="play" @click="redirectHome()">JOGAR</button>
   </div>
 </template>
 <script>
@@ -38,22 +38,14 @@ export default {
 
   //created significa uma função que executa assim que a pagina carrega
   created(){
-    this.test()
   },
 
 
   // methods é o espaço para declarar as funções que existem
   methods:{
 
-    test(){
-      console.log('sdosajdosjaiodjsoaj')
-      for(let i = 0; i < 5; i++){
-        console.log(i)
-      }
-    },
-
-    funcao(){
-      
+    redirectHome(){
+      this.$router.push('/PreviewGame')
     }
 
   }

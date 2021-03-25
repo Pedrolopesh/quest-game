@@ -15,6 +15,9 @@ router.route('/listAll/matter').get(MatterController.listMatter)
 
 router.route('/create/question').post(QuestController.createQuest)
 router.route('/listAll/question').get(QuestController.listQuest)
+router.route('/listByLevelAndLimit/question').post(QuestController.listQuestionsByLevelAndLimit)
 router.route('/listByLevel/question').post(QuestController.listQuestionsByLevel)
+router.route('/preview/answer/question').post(QuestController.previewAnswerQuestion)
+router.route('/answer/question').post(QuestController.answerQuestion)
 
 module.exports = router

@@ -1,6 +1,8 @@
 <template>
   <div>
-      <AppBar />
+      <!-- <AppBar /> -->
+      <h1 v-if="selectMatter" class="alg-txt-c mt-15 clr-purple">Você está jogando a mátéria {{ selectMatter.title }}</h1>
+      <h1 v-else class="alg-txt-c clr-purple">Você está jogando QUIZZ 🤓</h1>
       <PlayingForm />
   </div>
 </template>

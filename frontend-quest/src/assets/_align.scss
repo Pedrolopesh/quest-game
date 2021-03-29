@@ -292,39 +292,8 @@
     text-align: justify !important;
 }
 
-.line-h-25{
-    line-height: 35px !important;
-}
-
-.line-h-50{
-    line-height: 50px !important;
-}
-
-.align-card-button{
-    display: block !important;
-    margin-left: 285px;
-
-    @media screen and (max-width:700px) {
-        margin-left: 195px;
-    }
-}
-
-.align-card-button-1{
-    display: block !important;
-    margin-left: 155px;
-
-    @media screen and (max-width:700px) {
-        margin-left: 70px;
-    }
-}
-
-.align-card-button-2{
-    display: block !important;
-    margin-left: 5px;
-
-    @media screen and (max-width:700px) {
-        margin-left: 5px;
-    }
+.justify-center{
+    justify-content: center !important;
 }
 
 .brake-small{

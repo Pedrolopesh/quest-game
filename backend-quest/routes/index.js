@@ -6,6 +6,7 @@ const QuestController = require('../controllers/QuestController')
 const MatterController = require('../controllers/MatterController')
 const PodiumController = require('../controllers/PodiumController')
 
+router.route('/create/default/values').post(QuestController.createDefautValues)
 
 router.route('/sever/status').get(IndexController.getSeverStatus)
 

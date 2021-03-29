@@ -1,7 +1,11 @@
 <template>
   <div>
 
-    <AppBar />
+    <!-- <AppBar /> -->
+
+
+      <v-card class="p20 ac mt-20" max-width="700">
+      <h1 class="alg-txt-c mb-15">Selecione a máteria que deseja jogar 🤔</h1>
 
       <div v-for="(item,i) in matters" :key="i">
           <div align="center" class="mt-1">
@@ -11,12 +15,17 @@
           </div>
       </div>
 
-  
+        <hr class="mt-10">
+      <InfoPlayRulesDialog />
+      </v-card>
+
   </div>
 </template>
 
 <script>
-import AppBar from '../../components/AppBar.vue'
+import AppBar from '../../components/AppBar.vue';
+import InfoPlayRulesDialog from '../../components/InfoPlayRulesDialog.vue'
+
 export default {
   data:() => ({
     itens:[
@@ -26,7 +35,7 @@ export default {
     ],
     matters:'',
   }),
-  components: { AppBar },
+  components: { AppBar, InfoPlayRulesDialog },
   created(){
 
     this.getAllMetters()

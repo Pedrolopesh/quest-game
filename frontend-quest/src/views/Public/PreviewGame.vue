@@ -1,9 +1,11 @@
 <template>
   <div class="home">
 
-        <AppBar/>
+        <!-- <AppBar/> -->
 
-        <v-card class="form-container p20 ac">
+        <v-card class="form-container p20 ac mt-20">
+
+          <h2 class="alg-txt-c mb-5">Informações Do Jogador</h2>
 
           <v-text-field
             v-model="nickname"
@@ -24,8 +26,12 @@
           <div align="center">
               <v-btn :disabled="!nickname || !email" dark color="purple" @click="registerPlayer()">Jogar</v-btn>
           </div>
+
+          <InfoPlayRulesDialog />
         
         </v-card>
+
+
 
   </div>
 </template>
@@ -33,16 +39,19 @@
 <script>
 // @ is an alias to /src
 import AppBar from '../../components/AppBar.vue'
+import InfoPlayRulesDialog from '../../components/InfoPlayRulesDialog.vue'
 
 export default {
   name: 'Home',
   components: {
-    AppBar
+    AppBar,
+    InfoPlayRulesDialog
   },
 
   data:() => ({
     nickname:'',
     email:'',
+    dialogStateProps:false,
   }),
 
   methods:{
@@ -62,6 +71,14 @@ export default {
           this.$router.push('/SelectSubject')
         }
       })
+    },
+
+    showInfoDialog(){
+      this.dialogStateProps = true;
+    },
+
+    changeDialogStateProps(){
+      this.dialogStateProps = false;
     }
   }
 }

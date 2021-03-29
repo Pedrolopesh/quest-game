@@ -1,6 +1,7 @@
 const Player = require('../models/Player')
 const Quest = require('../models/Quest')
 const Matter = require('../models/Matter')
+const MathsDefaultData = require('../util/MathsDefaultData');
 
 module.exports = {
     async createQuest(req, res){
@@ -83,7 +84,27 @@ module.exports = {
 
         // if(!filtered || filtered.length === 0) return res.status(402).send({ success: false, message: 'matter not found' })
 
-        let result = filtered.slice(0,questLimit);
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+          
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+          
+              // Pick a remaining element...
+              randomIndex = Math.floor(Math.random() * currentIndex);
+              currentIndex -= 1;
+          
+              // And swap it with the current element.
+              temporaryValue = array[currentIndex];
+              array[currentIndex] = array[randomIndex];
+              array[randomIndex] = temporaryValue;
+            }
+          
+            return array;
+          }
+
+        const randomQuestions = await shuffle(filtered)
+        const result = randomQuestions.slice(0,questLimit);
 
         return res.status(201).send({ success: true, quests: result });
     },
@@ -191,30 +212,35 @@ module.exports = {
         }
         else{
 
-            const newQuest = new Quest({
-                matter:matter,
-                playerAnswer:[], 
-                description:"qual o resultado da expressão matématica: 1 + 2", 
-                correctAlternative:"B", 
-                alternatives:[
-                    {option:"A", text:"resultado é 0"},
-                    {option:"B", text:"resultado é 3"},
-                    {option:"C", text:"resultado é F(x) = 29x+x²-√4"},
-                    {option:"D", text:"resultado é fisica quantica"},
-                    {option:"E", text:"resultado é nenhuma das alternativas"}
-                ], 
-                level:1, 
-                points:100
-            })
+            const defaultMathQuestions = await MathsDefaultData(matter)
 
-            const savedQuest = await newQuest.save()
-            if(!savedQuest || savedQuest.length === '') return res.status(402).send({ success: false, message: 'error at save quest' })
+            for(let i = 0; i < defaultMathQuestions.length; i++){
+                const newQuest = new Quest({
+                    matter:matter,
+                    playerAnswer:[], 
+                    description:defaultMathQuestions[i].description, 
+                    correctAlternative:defaultMathQuestions[i].correctAlternative, 
+                    alternatives:[
+                        {option:"A", text:defaultMathQuestions[i].alternatives[0].text},
+                        {option:"B", text:defaultMathQuestions[i].alternatives[1].text},
+                        {option:"C", text:defaultMathQuestions[i].alternatives[2].text},
+                        {option:"D", text:defaultMathQuestions[i].alternatives[3].text},
+                        {option:"E", text:defaultMathQuestions[i].alternatives[4].text}
+                    ], 
+                    level:defaultMathQuestions[i].level, 
+                    points:defaultMathQuestions[i].points
+                })
+                const savedQuest = await newQuest.save()
+                if(!savedQuest || savedQuest.length === '') return res.status(402).send({ success: false, message: 'error at save quest' })
+                
+                const updatedMatter = await Matter.findByIdAndUpdate(matter, {
+                    $push:{ questions:savedQuest._id }
+                }).catch(err => { return res.status(402).send({ success: false, message: 'error on update Matter', err:err }) })
+    
+            }
+
+            return res.status(201).send({ success: true, savedQuest: defaultMathQuestions })
             
-            const updatedMatter = await Matter.findByIdAndUpdate(matter, {
-                $push:{ questions:savedQuest._id }
-            }).catch(err => { return res.status(402).send({ success: false, message: 'error on update Matter', err:err }) })
-
-            return res.status(201).send({ success: true, createdQuest: savedQuest, updatedMatter: updatedMatter })
         }
     },
 }

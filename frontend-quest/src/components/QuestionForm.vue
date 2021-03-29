@@ -7,7 +7,7 @@
             <!-- {{ checkbox }} -->
             <!-- {{ i }} -->
             <!-- <span v-if="checkbox[0] === i"> AQUI </span> -->
-                <!-- :value="checkbox" -->
+            <!-- :value="checkbox" -->
             <v-checkbox
                 @click="select(i, itens,item)"
                 :label="item.option+` - `+ item.text"
@@ -30,7 +30,7 @@ export default {
         disabledCheckBox: false,
 
         selectQuest:'',
-
+        allItens:'',
         checkboxActive:false,
     }),
 
@@ -41,7 +41,7 @@ export default {
             let currentSelectedQuest = { questId: selectedAlternativeParam._id, select: true, alternative:selectedAnswer.option}
             newArray.push(currentSelectedQuest)
             this.selectQuest = newArray
-            this.$emit('checkOutAnswer', emitParams)
+            // this.$emit('checkOutAnswer', emitParams)
         },
 
         checkStatusBox(i){
@@ -65,15 +65,14 @@ export default {
 
     watch:{
         confirmQuestion(){
-            console.log('things ==', this.confirmQuestion)
-            // this.addItensOnArray(this.confirmQuestion)
+            this.addItensOnArray(this.confirmQuestion)
             this.selectedCheckbox()
+            this.$emit('sendPropsParent', this.confirmQuestion)
         },
 
         currentStep(){
             this.selectQuest = ''
             this.disabledCheckBox = false
-            location.reload();
         }
     }
 }

@@ -1,0 +1,34 @@
+.container-podium{
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.position-podium{
+    border: 3px solid orange;
+    padding: 5px;
+    border-radius: 0px 20px 0px 20px;
+    max-width: 100%;
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container-podium-cups{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cup-size{
+    svg {
+        max-width: 100%;
+        width: 60px !important;
+    }
+}

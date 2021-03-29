@@ -1,17 +1,16 @@
 <template>
   <div>
-      
     <v-form v-model="valid">
         <v-container>
             <div class="p15">
 
                 <div>
-                    <v-select 
-                        color="purple" 
-                        v-model="selectedQuestion"
-                        :items="quests"
+                    <v-select
+                        color="purple"
+                        v-model="selectedMatter"
+                        :items="matters"
                         item-value="_id" item-text="title"
-                        label="Selecione a matéria" 
+                        label="Selecione a matéria"
                         :error="questFormError.questError"
                         outlined
                     ></v-select>
@@ -26,34 +25,14 @@
 
                     <v-select
                         class="mt-7"
-                        color="purple" 
-                        v-model="questionLevel"
-                        :items="leves"
-                        label="Nivel de dificuldade da questão" 
-                        item-value="level" item-text="text"
-                        :error="questFormError.questError"
-                        outlined
-                    ></v-select>
-
-                    <v-select
-                        class="mt-7"
-                        color="purple" 
+                        color="purple"
                         v-model="correctAlternative"
                         :items="alternatives"
-                        label="Qual a alternativa correta?" 
+                        label="Qual a alternativa correta?"
                         item-value="option" item-text="option"
                         :error="questFormError.correctAlternativeError"
                         outlined
                     ></v-select>
-
-                    <v-text-field
-                        v-model="points"
-                        :counter="50"
-                        label="Quantidade de pontos"
-                        type="number"
-                        :error="questFormError.pointsError"
-                        required
-                    ></v-text-field>
 
                     <div class="d-flex" v-for="(itens, index) in alternatives" :key="index">
                         <span class="mt-5 mr-3">{{ itens.option }} - </span>
@@ -65,6 +44,26 @@
                             required
                         ></v-text-field>
                     </div>
+
+                    <v-select
+                        class="mt-7"
+                        color="purple"
+                        v-model="questionLevel"
+                        :items="leves"
+                        label="Nivel de dificuldade da questão"
+                        item-value="level" item-text="text"
+                        :error="questFormError.questError"
+                        outlined
+                    ></v-select>
+
+                    <v-text-field
+                        v-model="points"
+                        :counter="50"
+                        label="Quantidade de pontos"
+                        type="number"
+                        :error="questFormError.pointsError"
+                        required
+                    ></v-text-field>
 
                 </div>
 
@@ -84,8 +83,11 @@
 export default {
     data:() => ({
         valid: true,
-        quests: '',
-        selectedQuestion: '',
+        matters: '',
+        selectedMatter: '',
+        points: '',
+        questionLevel: '',
+        correctAlternative: '',
         questionDescription:'',
         leves:[
             {level:1, text:'1 - Nivel facil'},
@@ -114,20 +116,28 @@ export default {
     },
 
     methods:{
-        registerQuest(){
-            console.log(this.alternatives)
+        async registerQuest(){
 
             let body = {
-                questions: this.alternatives
+                matter: this.selectedMatter,
+                description:this.questionDescription,
+                correctAlternative: this.correctAlternative,
+                alternatives: this.alternatives,
+                level:this.questionLevel,
+                points:this.points
             }
+            const questionReques = await this.$http.post(this.$url + '/create/question', body).catch(err => {console.log(err)})
+            console.log(questionReques)
+            if(!questionReques || questionReques.length === 0) console.log(questionReques)
+            else this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao cadastrar'})
         },
         closeModal(){
-            this.$emit('closeDialog', false)   
+            this.$emit('closeDialog', false)
         },
         getAllQuests(){
-            this.$http.get(this.$url + '/quests').then(resp => {
+            this.$http.get(this.$url + '/listAll/matter').then(resp => {
                 console.log(resp)
-                this.quests = resp.data.quests
+                this.matters = resp.data.matter
             })
         }
     }

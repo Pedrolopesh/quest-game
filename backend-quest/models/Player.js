@@ -16,7 +16,7 @@ const PlayerSchema = new mongoose.Schema({
     },
 
     totalScore: {
-        type: Number,
+        type: Object,
         require: false,
     },   
 

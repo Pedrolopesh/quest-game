@@ -4,6 +4,7 @@ const IndexController = require('../controllers/index')
 const PlayerController = require('../controllers/PlayerController')
 const QuestController = require('../controllers/QuestController')
 const MatterController = require('../controllers/MatterController')
+const PodiumController = require('../controllers/PodiumController')
 
 
 router.route('/sever/status').get(IndexController.getSeverStatus)
@@ -19,5 +20,8 @@ router.route('/listByLevelAndLimit/question').post(QuestController.listQuestions
 router.route('/listByLevel/question').post(QuestController.listQuestionsByLevel)
 router.route('/preview/answer/question').post(QuestController.previewAnswerQuestion)
 router.route('/answer/question').post(QuestController.answerQuestion)
+router.route('/answer/calculate').post(QuestController.answerAndCalculatePoints)
+
+router.route('/podium').get(PodiumController.createPodium)
 
 module.exports = router

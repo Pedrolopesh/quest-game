@@ -56,10 +56,10 @@ export default {
       this.$http.post(this.$url + '/player/create', body).then(resp => {
         if(!resp.data || resp.status != 201){
           this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Erro ao cadastrar player',})
-        
         }else{
           localStorage.setItem('player', JSON.stringify(resp.data));
           this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao cadastrar, Bem vindo Jogador: ' + resp.data.nickname,})
+          this.$router.push('/SelectSubject')
         }
       })
     }

@@ -20,7 +20,8 @@ module.exports = {
                 const newPlayer = new Player({
                     nickname,
                     email,
-                    status:"active"
+                    status:"active",
+                    totalScore:0
                 })
                 
                 const savedPlayer = await newPlayer.save()

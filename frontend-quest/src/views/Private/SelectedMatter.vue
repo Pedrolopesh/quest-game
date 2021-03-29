@@ -4,7 +4,13 @@
 
 
         <div v-for="(item,i) in questions" :key="i">
-            <QuestionForm :itens="item" :confirmQuestion="confirmQuestionDatas" :currentStep="currentStep" @checkOutAnswer="checkAnswer"/>
+            <QuestionForm 
+              :itens="item" 
+              :confirmQuestion="confirmQuestionDatas" 
+              :currentStep="currentStep" 
+              @checkOutAnswer="checkAnswer"
+              @sendPropsParent="setCurrentVariables"
+            />
         </div>
 
         <div align="center">
@@ -54,6 +60,10 @@ export default {
       currentStep:1,
       stepQuestion:'',
       defaultQuestions:'',
+
+      currentPlayer:'',
+      currentQuestions:'',
+      allItens:''
   }),
   created(){
     let localSelectedMatter = JSON.parse(localStorage.getItem('selectedMatter'))
@@ -88,6 +98,7 @@ export default {
         this.currentStep = this.currentStep+1
         this.requestForQuestions(this.currentStep)
         localStorage.setItem('stepQuestionForm', this.currentStep);
+        this.sendAnswers()  
       },
 
       setCurrentStepForm(){
@@ -110,14 +121,36 @@ export default {
         this.confirmQuestData = param.selectedAnswer
       },
 
+      setCurrentVariables(answers){ 
+        this.currentQuestions = answers;
+        this.allItens.push(answers);
+      },
+
+      async sendAnswers(){
+  
+        this.currentPlayer =  JSON.parse(localStorage.getItem('player'));
+        for (let i = 0; i < this.currentQuestions.length; i++){
+          let body = { questId:this.currentQuestions[i].questId, player:this.currentQuestions[i].player, playerOption:this.currentQuestions[i].playerOption }
+          console.log(body)
+          console.log("ENVIA" , this.currentQuestions[i])
+          const answerQuestion = await this.$http.post(this.$url + '/answer/question', body);
+          if(!answerQuestion || answerQuestion.length === 0) this.$vs.notification({ duration: 9000, progress: 'auto', color:'danger', title: 'Ops! Algo deu errado!'})
+          if(answerQuestion){
+            this.confirmQuestionDatas = body 
+          }
+        }
+        if(this.confirmQuestionDatas){
+          this.$vs.notification({ duration: 9000, progress: 'auto', color:'success', title: 'Sucesso ao responder.', position:'top'})
+          // location.reload();
+        } 
+      },
+
 
       async confirmAnswer(){
-
-        console.log(this.paramSelectedQuest)
-        let currentPlayer =  JSON.parse(localStorage.getItem('player'))
+        this.currentPlayer =  JSON.parse(localStorage.getItem('player'));
         let selectedAlternative = {
             questId:this.paramSelectedQuest.selectedAlternativeParam._id,
-            player:currentPlayer.player._id,
+            player:this.currentPlayer.player._id,
             playerOption:this.paramSelectedQuest.selectedAnswer.option
         }
         this.confirmQuestionDatas.push(selectedAlternative)
@@ -131,7 +164,9 @@ export default {
       },
 
       async finishGame(){
-        this.$router.push('/')
+        this.sendAnswers();
+        console.log('ITEMS AQUI == ', this.allItens);
+        // this.$router.push('/')
       }
   }
 }
